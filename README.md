@@ -49,7 +49,7 @@ BubuOS is a custom DOS-like shell for Raspberry Pi CM4, written in Python + pyga
 ## Install
 
 1. Flash **Raspberry Pi OS Lite (64-bit)** to a microSD card
-2. Copy the `pocketos/` directory to `/home/<user>/pocketos/`
+2. Copy the `bubuos/` directory to `/home/<user>/bubuos/`
 3. Install dependencies:
    ```bash
    sudo apt install python3-pygame xserver-xorg-core xinit

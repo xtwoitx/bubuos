@@ -33,7 +33,7 @@ def apply_update():
     except Exception:
         pass
     try:
-        # Extract to parent of pocketos/ (i.e. home dir)
+        # Extract to parent of bubuos/ (i.e. home dir)
         home = os.path.dirname(PROJECT_DIR)
         with tarfile.open(UPDATE_TARBALL, "r:gz") as tar:
             tar.extractall(path=home, filter="fully_trusted")

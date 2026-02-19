@@ -1,11 +1,11 @@
 #!/bin/bash
-# PocketOS Setup Script for Raspberry Pi CM4 Lite + GPi Case 2
+# BubuOS Setup Script for Raspberry Pi CM4 Lite + GPi Case 2
 # Run as root: sudo bash setup.sh
 
 set -e
 
 echo "========================================="
-echo "  PocketOS Setup for GPi Case 2 + CM4"
+echo "  BubuOS Setup for GPi Case 2 + CM4"
 echo "========================================="
 
 # Check root
@@ -15,7 +15,7 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 USER_HOME="/home/pi"
-POCKETOS_DIR="$USER_HOME/pocketos"
+BUBUOS_DIR="$USER_HOME/bubuos"
 DATA_DIR="$USER_HOME/data"
 
 # --- 1. System update ---
@@ -94,10 +94,10 @@ if [ ! -f "$BOOT_CONFIG" ]; then
 fi
 
 # Ensure display settings for GPi Case 2
-if ! grep -q "# PocketOS GPi Case 2" "$BOOT_CONFIG"; then
+if ! grep -q "# BubuOS GPi Case 2" "$BOOT_CONFIG"; then
     cat >> "$BOOT_CONFIG" << 'BOOTEOF'
 
-# PocketOS GPi Case 2 settings
+# BubuOS GPi Case 2 settings
 dtoverlay=vc4-kms-v3d
 hdmi_force_hotplug=1
 hdmi_group=2
@@ -111,15 +111,15 @@ fi
 
 # --- 7. Create data directory and systemd service ---
 echo ""
-echo "[7/8] Setting up PocketOS service..."
+echo "[7/8] Setting up BubuOS service..."
 
 mkdir -p "$DATA_DIR"/{documents,music,video,pictures}
 chown -R pi:pi "$DATA_DIR"
 
 # Install systemd service
-cp "$POCKETOS_DIR/setup/pocketos.service" /etc/systemd/system/
+cp "$BUBUOS_DIR/setup/bubuos.service" /etc/systemd/system/
 systemctl daemon-reload
-systemctl enable pocketos.service
+systemctl enable bubuos.service
 
 # --- 8. Set console autologin for pi user ---
 echo ""
@@ -134,7 +134,7 @@ EOF
 
 echo ""
 echo "========================================="
-echo "  PocketOS setup complete!"
+echo "  BubuOS setup complete!"
 echo "  Data directory: $DATA_DIR"
 echo "  Reboot to start: sudo reboot"
 echo "========================================="

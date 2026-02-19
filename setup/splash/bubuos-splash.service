@@ -10,7 +10,7 @@ Environment=SDL_VIDEODRIVER=x11
 Environment=SDL_AUDIODRIVER=dummy
 TTYPath=/dev/tty1
 StandardInput=tty
-ExecStart=/usr/bin/xinit /usr/bin/python3 /home/xgpicase2x/pocketos/setup/splash/bootsplash.py -- :9 vt1 -nocursor -nolisten tcp -keeptty
+ExecStart=/usr/bin/xinit /usr/bin/python3 /home/xgpicase2x/bubuos/setup/splash/bootsplash.py -- :9 vt1 -nocursor -nolisten tcp -keeptty
 KillMode=control-group
 TimeoutStopSec=3
 

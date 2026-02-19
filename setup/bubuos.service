@@ -7,14 +7,14 @@ Conflicts=getty@tty1.service
 Type=simple
 User=xgpicase2x
 Group=xgpicase2x
-WorkingDirectory=/home/xgpicase2x/pocketos
+WorkingDirectory=/home/xgpicase2x/bubuos
 TTYPath=/dev/tty1
 StandardInput=tty
 StandardOutput=journal
 StandardError=journal
 Environment=SDL_VIDEODRIVER=x11
 Environment=SDL_AUDIODRIVER=alsa
-ExecStart=/usr/bin/xinit /usr/bin/python3 /home/xgpicase2x/pocketos/main.py -- :0 vt1 -nocursor -nolisten tcp -keeptty
+ExecStart=/usr/bin/xinit /usr/bin/python3 /home/xgpicase2x/bubuos/main.py -- :0 vt1 -nocursor -nolisten tcp -keeptty
 Restart=on-failure
 RestartSec=3
 
