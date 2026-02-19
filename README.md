@@ -34,7 +34,7 @@ BubuOS is a custom DOS-like shell for Raspberry Pi CM4, written in Python + pyga
 
 ## Hardware
 
-- [GPi Case 2](https://retroflag.com/gpi-case-2.html) — the shell (screen + buttons + battery)
+- [GPi Case 2](https://retroflag.com/gpi_case_2.html) — the shell (screen + buttons + battery)
 - [Raspberry Pi CM4 Lite](https://www.raspberrypi.com/products/compute-module-4/) — 2GB RAM, Wireless
 - microSD card (any size, 8GB+ recommended)
 
