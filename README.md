@@ -41,23 +41,48 @@ BubuOS is a custom DOS-like shell for Raspberry Pi CM4, written in Python + pyga
 ## Stack
 
 - Raspberry Pi OS Lite (Debian 13, no desktop)
-- Python 3.13 + pygame 2.6 (SDL2)
+- Python 3 + pygame 2 (SDL2)
 - X11 via `xinit` (not kmsdrm — due to a vc4-fkms-v3d async page flip bug)
 - PipeWire + WirePlumber for Bluetooth audio
 - Systemd service for auto-start
 
 ## Install
 
+### Quick setup (recommended)
+
+1. Flash **Raspberry Pi OS Lite (64-bit)** to a microSD card
+2. Boot, log in, and clone this repo:
+   ```bash
+   git clone https://github.com/xtwoitx/bubuos.git ~/bubuos
+   ```
+3. Run the setup script (replace `pi` with your username if different):
+   ```bash
+   sudo bash ~/bubuos/setup/setup.sh pi
+   ```
+4. Reboot:
+   ```bash
+   sudo reboot
+   ```
+
+BubuOS will start automatically on boot. Use the built-in WiFi Manager app to connect to your network.
+
+### Manual setup
+
 1. Flash **Raspberry Pi OS Lite (64-bit)** to a microSD card
 2. Copy the `bubuos/` directory to `/home/<user>/bubuos/`
 3. Install dependencies:
    ```bash
-   sudo apt install python3-pygame xserver-xorg-core xinit
-   pip install -r requirements.txt
+   sudo apt install python3-pygame xserver-xorg-core xinit \
+       pipewire pipewire-pulse wireplumber libspa-0.2-bluetooth \
+       network-manager bluez
    ```
-4. Install the systemd service:
+4. Allow non-root X server:
    ```bash
-   sudo cp setup/bubuos.service /etc/systemd/system/
+   echo -e "allowed_users=anybody\nneeds_root_rights=yes" | sudo tee /etc/X11/Xwrapper.config
+   ```
+5. Install the systemd service (replace `<user>` with your username):
+   ```bash
+   sed "s/YOUR_USER/<user>/g" setup/bubuos.service | sudo tee /etc/systemd/system/bubuos.service
    sudo systemctl enable bubuos
    sudo reboot
    ```

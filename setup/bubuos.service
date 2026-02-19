@@ -1,3 +1,4 @@
+# Replace YOUR_USER with your Linux username (e.g. pi)
 [Unit]
 Description=BubuOS Shell
 After=multi-user.target
@@ -5,16 +6,16 @@ Conflicts=getty@tty1.service
 
 [Service]
 Type=simple
-User=xgpicase2x
-Group=xgpicase2x
-WorkingDirectory=/home/xgpicase2x/bubuos
+User=YOUR_USER
+Group=YOUR_USER
+WorkingDirectory=/home/YOUR_USER/bubuos
 TTYPath=/dev/tty1
 StandardInput=tty
 StandardOutput=journal
 StandardError=journal
 Environment=SDL_VIDEODRIVER=x11
 Environment=SDL_AUDIODRIVER=alsa
-ExecStart=/usr/bin/xinit /usr/bin/python3 /home/xgpicase2x/bubuos/main.py -- :0 vt1 -nocursor -nolisten tcp -keeptty
+ExecStart=/usr/bin/xinit /usr/bin/python3 /home/YOUR_USER/bubuos/main.py -- :0 vt1 -nocursor -nolisten tcp -keeptty
 Restart=on-failure
 RestartSec=3
 

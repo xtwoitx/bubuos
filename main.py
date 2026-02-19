@@ -53,60 +53,28 @@ def apply_update():
 
 
 def setup_wifi():
-    """Ensure default WiFi is configured (one-time)."""
-    nm_dir = "/etc/NetworkManager/system-connections"
-    nm_file = os.path.join(nm_dir, "SKYNJWTS.nmconnection")
-    if os.path.exists(nm_file):
-        return
-    try:
-        config = (
-            "[connection]\n"
-            "id=SKYNJWTS\n"
-            "type=wifi\n"
-            "autoconnect=true\n"
-            "autoconnect-priority=100\n\n"
-            "[wifi]\n"
-            "mode=infrastructure\n"
-            "ssid=SKYNJWTS\n\n"
-            "[wifi-security]\n"
-            "key-mgmt=wpa-psk\n"
-            "psk=f2UNgiVGdH4p\n\n"
-            "[ipv4]\n"
-            "method=auto\n\n"
-            "[ipv6]\n"
-            "method=auto\n"
-        )
-        subprocess.run(
-            ["sudo", "tee", nm_file],
-            input=config, text=True,
-            capture_output=True
-        )
-        subprocess.run(["sudo", "chmod", "600", nm_file], capture_output=True)
-        subprocess.run(["sudo", "nmcli", "connection", "reload"], capture_output=True)
-    except Exception:
-        pass
+    """No-op — WiFi is configured via the built-in WiFi Manager app."""
+    pass
 
 
 def setup_sudoers():
-    """Ensure sudoers rules exist for nmcli and rfkill."""
+    """Ensure sudoers rules exist for nmcli and rfkill (uses current user)."""
+    import getpass
+    user = getpass.getuser()
     sudoers_file = "/etc/sudoers.d/bubuos"
     expected = (
-        "xgpicase2x ALL=(ALL) NOPASSWD: /usr/bin/nmcli\n"
-        "xgpicase2x ALL=(ALL) NOPASSWD: /usr/sbin/rfkill\n"
+        f"{user} ALL=(ALL) NOPASSWD: /usr/bin/nmcli\n"
+        f"{user} ALL=(ALL) NOPASSWD: /usr/sbin/rfkill\n"
     )
-    # Check if current file has all rules
     try:
         if os.path.exists(sudoers_file):
             with open(sudoers_file) as f:
-                if "rfkill" in f.read():
+                content = f.read()
+                if user in content and "rfkill" in content:
                     return
     except Exception:
         pass
     try:
-        # Remove old file if it exists under old name
-        old_file = "/etc/sudoers.d/nmcli-bubuos"
-        if os.path.exists(old_file):
-            subprocess.run(["sudo", "rm", old_file], capture_output=True)
         subprocess.run(
             ["sudo", "tee", sudoers_file],
             input=expected,
