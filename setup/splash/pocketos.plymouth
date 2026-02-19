@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=PocketOS
+Description=PocketOS boot splash for GPi Case 2
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/pocketos
+ScriptFile=/usr/share/plymouth/themes/pocketos/pocketos.script

@@ -1,0 +1,55 @@
+/**
+ * PocketOS Plymouth boot splash script
+ * Shows pixel logo + animated progress bar on black background
+ */
+
+/* Background */
+Window.SetBackgroundTopColor(0, 0, 0);
+Window.SetBackgroundBottomColor(0, 0, 0);
+
+/* Load splash image (logo + text, no progress bar fill) */
+splash = Image("splash.png");
+splash_sprite = Sprite(splash);
+
+/* Center the splash on screen */
+screen_w = Window.GetWidth();
+screen_h = Window.GetHeight();
+splash_w = splash.GetWidth();
+splash_h = splash.GetHeight();
+
+scale_x = screen_w / splash_w;
+scale_y = screen_h / splash_h;
+scale = Math.Min(scale_x, scale_y);
+
+splash_sprite.SetX((screen_w - splash_w * scale) / 2);
+splash_sprite.SetY((screen_h - splash_h * scale) / 2);
+
+if (scale != 1) {
+    scaled = splash.Scale(splash_w * scale, splash_h * scale);
+    splash_sprite.SetImage(scaled);
+}
+
+/* Progress bar */
+bar_image = Image("progress_bar.png");
+bar_sprite = Sprite();
+bar_sprite.SetPosition((screen_w - 196) / 2, (screen_h / 2) + 112);
+
+fun progress_callback(duration, progress) {
+    if (progress >= 0) {
+        bar_w = Math.Int(196 * progress);
+        if (bar_w > 0) {
+            scaled_bar = bar_image.Scale(bar_w, 8);
+            bar_sprite.SetImage(scaled_bar);
+        }
+    }
+}
+
+Plymouth.SetBootProgressFunction(progress_callback);
+
+/**
+ * Hide password prompt and messages (we don't need them)
+ */
+fun message_callback(text) {
+}
+
+Plymouth.SetMessageFunction(message_callback);
